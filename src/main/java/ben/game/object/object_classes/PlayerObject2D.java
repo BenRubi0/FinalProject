@@ -21,38 +21,42 @@ public class PlayerObject2D extends EntityObject2D {
     private void registerKeyBinds() {
         // move right
         new GameInputHandler(
-                () -> this.position.x(this.position.x()+2.5f),
+                () -> this.rigidBody.addRightVelocity(0.5f),
                 Raylib.KEY_D,
                 "Moves the player to the right.",
                 "Move Right",
-                this
+                this,
+                true
         );
 
         // move left
         new GameInputHandler(
-                () -> this.position.x(this.position.x()-2.5f),
+                () -> this.rigidBody.addRightVelocity(-0.5f),
                 Raylib.KEY_A,
                 "Moves the player to the left.",
                 "Move Left",
-                this
+                this,
+                true
         );
 
         // jump
         new GameInputHandler(
-                () -> this.position.y(this.position.y()-5.0f),
+                () -> this.rigidBody.addUpVelocity(-3.0f),
                 Raylib.KEY_SPACE,
                 "Makes the player jump up.",
                 "Jump",
-                this
+                this,
+                false
         );
 
         // crouch
         new GameInputHandler(
-                () -> this.position.y(this.position.y()+5.0f),
+                () -> this.rigidBody.addUpVelocity(1.0f),
                 Raylib.KEY_LEFT_SHIFT,
                 "Makes the player crouch down.",
                 "Crouch",
-                this
+                this,
+                true
         );
     }
 

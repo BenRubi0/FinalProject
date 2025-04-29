@@ -10,7 +10,8 @@ import com.raylib.Colors;
 import com.raylib.Raylib;
 
 public class EntityObject2D extends GameObject2D {
-    public Raylib.Rectangle hitbox;
+    public ColliderObject2D collider;
+    public RigidBodyObject2D rigidBody;
 
     public float health;
     private final float maxHealth;
@@ -24,8 +25,8 @@ public class EntityObject2D extends GameObject2D {
         this.minHealth = 0.0f;
         this.maxHealth = maxHealth;
         this.health = this.maxHealth;
-        this.hitbox = new Raylib.Rectangle().x(this.position.x()).y(this.position.y())
-                .width(this.dimensions.x()).width(this.dimensions.y());
+        this.collider = new ColliderObject2D(dimensions, position);
+        this.rigidBody = new RigidBodyObject2D(dimensions, position, 0.15f);
     }
 
     public void heal(float amount) {
@@ -40,19 +41,19 @@ public class EntityObject2D extends GameObject2D {
         else this.health = this.minHealth;
     }
 
-    public boolean checkHitboxCollision(Raylib.Rectangle collider) { return Raylib.CheckCollisionRecs(this.hitbox, collider); }
-
     public void renderHitbox() {
         if (Game.showHitboxes) {
-            Raylib.DrawRectangleLinesEx(this.hitbox, 3.5f, Colors.BLUE);
+            Raylib.DrawRectangleLinesEx(this.collider.hitbox, 3.5f, Colors.BLUE);
         }
     }
 
     @Override
     public void Update() {
+        // velocity
+        this.rigidBody.Update();
+
         // update the entity's hitbox
-        this.hitbox.x(this.position.x()).y(this.position.y())
-                .width(this.dimensions.x()).height(this.dimensions.y());
+        this.collider.Update();
 
         // check entity alive status
         this.isEntityAlive = !(this.health <= minHealth);

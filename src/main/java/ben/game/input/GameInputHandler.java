@@ -15,6 +15,7 @@ public class GameInputHandler {
     public Runnable action;
     public String actionDescription;
     public String actionIdentifier;
+    public boolean hold = false;
 
     public GameInputHandler(Runnable eventHandler, int eventTriggerKey, String actionDescription, String actionIdentifier, GameObject parentObject) {
         this.triggerKey = eventTriggerKey;
@@ -25,8 +26,23 @@ public class GameInputHandler {
         Game.addInputHandlerToGlobalArray(this);
     }
 
+    public GameInputHandler(Runnable eventHandler, int eventTriggerKey, String actionDescription, String actionIdentifier, GameObject parentObject, boolean hold) {
+        this.triggerKey = eventTriggerKey;
+        this.action = eventHandler;
+        this.actionDescription = actionDescription;
+        this.actionIdentifier = actionIdentifier;
+        this.parentObject = parentObject;
+        this.hold = hold;
+        Game.addInputHandlerToGlobalArray(this);
+    }
+
     public void getInput() {
-        if (Raylib.IsKeyDown(this.triggerKey))
-            this.action.run();
+        if (hold) {
+            if (Raylib.IsKeyDown(this.triggerKey))
+                this.action.run();
+        } else {
+            if (Raylib.IsKeyPressed(this.triggerKey))
+                this.action.run();
+        }
     }
 }
