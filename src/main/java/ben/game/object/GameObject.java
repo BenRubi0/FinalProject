@@ -7,6 +7,8 @@ package ben.game.object;
 import ben.game.scene.GameScene;
 
 public class GameObject {
+    public String objectGroup = "Object";
+
     public GameScene parentScene;
 
     public boolean shouldRender;
@@ -24,6 +26,8 @@ public class GameObject {
         this.shouldRender = shouldRender;
         this.shouldClose = shouldClose;
     }
+
+    public void setObjectGroup(String group) { this.objectGroup = group; }
 
     public void setParentScene(GameScene parentScene) { this.parentScene = parentScene; }
 

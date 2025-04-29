@@ -51,7 +51,11 @@ public class PlayerObject2D extends EntityObject2D {
 
         // crouch
         new GameInputHandler(
-                () -> this.rigidBody.addUpVelocity(1.0f),
+                () -> {
+                    if (!this.isOnFloor) {
+                        this.rigidBody.addUpVelocity(1.0f);
+                    }
+                },
                 Raylib.KEY_LEFT_SHIFT,
                 "Makes the player crouch down.",
                 "Crouch",

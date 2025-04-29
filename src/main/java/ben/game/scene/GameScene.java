@@ -14,6 +14,17 @@ public abstract class GameScene {
     public void addGameObject(GameObject object) { this.gameObjects.add(object); object.setParentScene(this); }
     public void removeGameObject(GameObject object) { this.gameObjects.remove(object); object.setParentScene(null); }
 
+    public ArrayList<GameObject> getGameObjectsOfGroup(String groupName) {
+        ArrayList<GameObject> objects = new ArrayList<>();
+
+        for (GameObject object : gameObjects) {
+            if (object.objectGroup.equals(groupName))
+                objects.add(object);
+        }
+
+        return objects;
+    }
+
     public void update() {
         for (GameObject object : this.gameObjects) {
             if (object.shouldUpdate)
