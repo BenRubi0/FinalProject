@@ -30,5 +30,5 @@ public class Game {
     }
 
     // rendering
-    public static boolean showHitboxes = true;
+    public static boolean showHitboxes = false;
 }

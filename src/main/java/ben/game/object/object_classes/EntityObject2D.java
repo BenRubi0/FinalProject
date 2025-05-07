@@ -12,6 +12,9 @@ import com.raylib.Raylib;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class EntityObject2D extends GameObject2D {
     public ColliderObject2D collider;
     public RigidBodyObject2D rigidBody;
@@ -22,8 +25,6 @@ public class EntityObject2D extends GameObject2D {
 
     public boolean isOnFloor = false;
     public boolean isEntityAlive = true;
-
-    public Raylib.Vector2 lastFloorCollisionPos;
 
     public EntityObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position, float maxHealth) {
         super(dimensions, position);
@@ -52,21 +53,38 @@ public class EntityObject2D extends GameObject2D {
 
         boolean didCollide = false;
 
+        boolean isInFloor = false;
+        float floorLevel = 0.0f;
+
         for (GameObject object : floorObjects) {
             if (object instanceof FloorObject2D fo2d) {
-                if (Raylib.CheckCollisionRecs(this.collider.hitbox, fo2d.collider.hitbox)) {
-                    didCollide = true;
-                    if (this.lastFloorCollisionPos == null)
-                        this.lastFloorCollisionPos = this.position;
-                    break;
+                if (this.collider.checkHitboxCollision(fo2d.collider)) {
+                    // checking y floor collision
+                    if ((this.collider.hitbox.y()+this.collider.dimensions.y()-(((this.dimensions.y()/2)*0.1f)+0.5f)) > fo2d.floorY) {
+                        didCollide = true;
+                        isInFloor = true;
+                        floorLevel = fo2d.floorY;
+                        break;
+                    }
+
+                    if (this.collider.hitbox.y() <
+                            (fo2d.collider.hitbox.y() + fo2d.collider.hitbox.height()) &&
+                            fo2d.collider.hitbox.y() < (this.collider.hitbox.y() + this.collider.hitbox.height())) {
+                        didCollide = true;
+                        break;
+                    }
                 }
             }
         }
 
         this.isOnFloor = didCollide;
 
-        if (!isOnFloor)
-            this.lastFloorCollisionPos = null;
+        this.rigidBody.setShouldMoveDown(!this.isOnFloor);
+
+        if (isInFloor) {
+            System.out.println("pushing out of floor");
+            this.position.y(floorLevel-(this.collider.dimensions.y()+0.05f));
+        }
     }
 
     public void renderHitbox() {
@@ -82,6 +100,10 @@ public class EntityObject2D extends GameObject2D {
 
         // floor
         this.checkFloor();
+
+        // gravity
+        if (!this.isOnFloor)
+            this.rigidBody.addGravity();
 
         // update the entity's hitbox
         this.collider.Update();

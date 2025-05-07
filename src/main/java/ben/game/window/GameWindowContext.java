@@ -18,6 +18,7 @@ public class GameWindowContext {
     public String windowTitle;
     public GameWindowDimensions windowDimensions;
     public boolean resizable = false;
+    public Raylib.Camera2D camera2D = new Raylib.Camera2D().target(new Raylib.Vector2().x(0.0f).y(0.0f)).offset(new Raylib.Vector2().x(0.0f).y(0.0f));
 
     private final ArrayList<GameListener> gameListeners = new ArrayList<>();
     private GameScene currentScene = new TestScene();
@@ -64,19 +65,21 @@ public class GameWindowContext {
         while (!Raylib.WindowShouldClose()) {
             Game.getUserInput();
 
-
             this.p_callListenersOfContext(GameListenerContext.ON_UPDATE);
 
             this.currentScene.update();
 
+
+            Raylib.BeginMode2D(this.camera2D);
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Colors.BLACK);
+            Raylib.ClearBackground(this.currentScene.bgColor);
 
             this.p_callListenersOfContext(GameListenerContext.ON_RENDER);
 
             this.currentScene.render();
 
             Raylib.EndDrawing();
+            Raylib.EndMode2D();
         }
 
         this.p_callListenersOfContext(GameListenerContext.ON_CLOSE);

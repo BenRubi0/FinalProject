@@ -41,7 +41,10 @@ public class PlayerObject2D extends EntityObject2D {
 
         // jump
         new GameInputHandler(
-                () -> this.rigidBody.addUpVelocity(-3.0f),
+                () -> {
+                    if (this.isOnFloor)
+                        this.rigidBody.addUpVelocity(-10.0f);
+                },
                 Raylib.KEY_SPACE,
                 "Makes the player jump up.",
                 "Jump",
@@ -52,9 +55,8 @@ public class PlayerObject2D extends EntityObject2D {
         // crouch
         new GameInputHandler(
                 () -> {
-                    if (!this.isOnFloor) {
+                    if (!this.isOnFloor)
                         this.rigidBody.addUpVelocity(1.0f);
-                    }
                 },
                 Raylib.KEY_LEFT_SHIFT,
                 "Makes the player crouch down.",

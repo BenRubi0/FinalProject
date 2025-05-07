@@ -5,14 +5,19 @@
 package ben.game.scene;
 
 import ben.game.object.GameObject;
+import com.raylib.Raylib;
 
 import java.util.ArrayList;
 
 public abstract class GameScene {
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
+    public Raylib.Color bgColor = new Raylib.Color().r((byte) 0).b((byte) 0).g((byte) 0).a((byte) 255);
+
     public void addGameObject(GameObject object) { this.gameObjects.add(object); object.setParentScene(this); }
     public void removeGameObject(GameObject object) { this.gameObjects.remove(object); object.setParentScene(null); }
+
+    public void setBgColor(Raylib.Color color) { this.bgColor = color; }
 
     public ArrayList<GameObject> getGameObjectsOfGroup(String groupName) {
         ArrayList<GameObject> objects = new ArrayList<>();
