@@ -2,7 +2,7 @@
 // For Mr. Gross Software and Programming Dev 2 Class
 // Contact at benjamin.rubio@malad.us
 
-package ben.game.object.object_classes;
+package ben.game.object.object_classes.world;
 
 import ben.game.Game;
 import ben.game.object.GameObject2D;
@@ -11,9 +11,10 @@ import com.raylib.Raylib;
 
 public class FloorObject2D extends GameObject2D {
     public ColliderObject2D collider;
-    public Raylib.Rectangle renderRect;
     public float floorY;
     public float floorX;
+
+    private final Raylib.Rectangle renderRect;
 
     public FloorObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position) {
         super(dimensions, position);

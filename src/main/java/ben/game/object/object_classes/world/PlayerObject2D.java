@@ -2,7 +2,7 @@
 // For Mr. Gross Software and Programming Dev 2 Class
 // Contact at benjamin.rubio@malad.us
 
-package ben.game.object.object_classes;
+package ben.game.object.object_classes.world;
 
 import ben.game.input.GameInputHandler;
 import com.raylib.Colors;
@@ -13,6 +13,7 @@ public class PlayerObject2D extends EntityObject2D {
 
     public PlayerObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position) {
         super(dimensions, position, 100.0f);
+        this.setObjectGroup("Player");
         this.registerKeyBinds();
         this.renderRect = new Raylib.Rectangle().x(this.position.x()).y(this.position.y())
                 .width(this.dimensions.x()).height(this.dimensions.y());

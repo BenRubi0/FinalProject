@@ -2,7 +2,7 @@
 // For Mr. Gross Software and Programming Dev 2 Class
 // Contact at benjamin.rubio@malad.us
 
-package ben.game.object.object_classes;
+package ben.game.object.object_classes.world;
 
 import ben.game.object.GameObject2D;
 import com.raylib.Raylib;

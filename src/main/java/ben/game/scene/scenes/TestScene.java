@@ -4,8 +4,8 @@
 
 package ben.game.scene.scenes;
 
-import ben.game.object.object_classes.FloorObject2D;
-import ben.game.object.object_classes.PlayerObject2D;
+import ben.game.object.object_classes.world.FloorObject2D;
+import ben.game.object.object_classes.world.PlayerObject2D;
 import ben.game.scene.GameScene;
 import com.raylib.Colors;
 import com.raylib.Raylib;

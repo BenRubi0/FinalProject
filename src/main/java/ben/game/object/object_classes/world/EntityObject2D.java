@@ -2,7 +2,7 @@
 // For Mr. Gross Software and Programming Dev 2 Class
 // Contact at benjamin.rubio@malad.us
 
-package ben.game.object.object_classes;
+package ben.game.object.object_classes.world;
 
 import ben.game.Game;
 import ben.game.object.GameObject;
@@ -81,10 +81,8 @@ public class EntityObject2D extends GameObject2D {
 
         this.rigidBody.setShouldMoveDown(!this.isOnFloor);
 
-        if (isInFloor) {
-            System.out.println("pushing out of floor");
+        if (isInFloor)
             this.position.y(floorLevel-(this.collider.dimensions.y()+0.05f));
-        }
     }
 
     public void renderHitbox() {

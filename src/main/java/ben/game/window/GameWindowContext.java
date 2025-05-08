@@ -6,6 +6,7 @@ package ben.game.window;
 
 import ben.game.Game;
 import ben.game.scene.scenes.TestScene;
+import ben.game.scene.scenes.TestScreenScene;
 import ben.game.window.listener.GameListener;
 import ben.game.window.listener.GameListenerContext;
 import ben.game.scene.GameScene;
@@ -21,7 +22,7 @@ public class GameWindowContext {
     public Raylib.Camera2D camera2D = new Raylib.Camera2D().target(new Raylib.Vector2().x(0.0f).y(0.0f)).offset(new Raylib.Vector2().x(0.0f).y(0.0f));
 
     private final ArrayList<GameListener> gameListeners = new ArrayList<>();
-    private GameScene currentScene = new TestScene();
+    private GameScene currentScene = new TestScreenScene();
 
     private void p_callListenersOfContext(GameListenerContext context) {
         for (GameListener gameListener : this.gameListeners) {
@@ -42,7 +43,7 @@ public class GameWindowContext {
         this.resizable = resizable;
     }
 
-    public void setCurrentScene(GameScene scene) { this.currentScene = scene; }
+    public void setCurrentScene(GameScene scene) { this.currentScene = scene; this.currentScene.init(); }
 
     public GameScene getCurrentScene() { return currentScene; }
 
