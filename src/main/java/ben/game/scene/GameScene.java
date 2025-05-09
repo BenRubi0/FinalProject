@@ -5,6 +5,7 @@
 package ben.game.scene;
 
 import ben.game.object.GameObject;
+import ben.game.object.object_classes.world.PlayerObject2D;
 import com.raylib.Raylib;
 
 import java.util.ArrayList;
@@ -14,10 +15,17 @@ public abstract class GameScene {
 
     public Raylib.Color bgColor = new Raylib.Color().r((byte) 0).b((byte) 0).g((byte) 0).a((byte) 255);
 
+    public PlayerObject2D playerObject;
+
     public void addGameObject(GameObject object) { this.gameObjects.add(object); object.setParentScene(this); }
     public void removeGameObject(GameObject object) { this.gameObjects.remove(object); object.setParentScene(null); }
 
     public void setBgColor(Raylib.Color color) { this.bgColor = color; }
+
+    public void addPlayerToScene() {
+        this.playerObject = new PlayerObject2D(new Raylib.Vector2().x(50).y(50), new Raylib.Vector2().x(50).y(50));
+        this.addGameObject(this.playerObject);
+    }
 
     public ArrayList<GameObject> getGameObjectsOfGroup(String groupName) {
         ArrayList<GameObject> objects = new ArrayList<>();
@@ -39,7 +47,7 @@ public abstract class GameScene {
 
     public void render() {
         for (GameObject object : this.gameObjects) {
-            if (object.shouldRender)
+            if (object.shouldRender && !object.objectGroup.equals("Gui"))
                 object.Render();
         }
     }

@@ -28,7 +28,7 @@ public class FloorObject2D extends GameObject2D {
 
     @Override
     public void Render() {
-        Raylib.DrawRectangleRec(this.renderRect, Colors.BLUE);
+        Raylib.DrawRectangleRec(this.renderRect, Colors.SKYBLUE);
 
         if (Game.showHitboxes) {
             Raylib.DrawRectangleLinesEx(this.collider.hitbox, 3.5f, Colors.RED);
