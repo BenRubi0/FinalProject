@@ -18,6 +18,10 @@ public class Level1Scene extends GameScene {
     public void init() {
         this.addPlayerToScene();
 
+        this.playerObject.addOnDeathCallback(() -> {
+            Game.windowContext.setCurrentScene(new TestScreenScene());
+        });
+
         // floors
         FloorObject2D ground = new FloorObject2D(new Raylib.Vector2().x((float) Game.getWindowDimensions().width).y(50.0f),
                 new Raylib.Vector2().x(0.0f).y((float) Game.getWindowDimensions().height - 50.0f));
