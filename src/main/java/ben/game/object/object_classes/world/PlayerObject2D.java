@@ -71,7 +71,7 @@ public class PlayerObject2D extends EntityObject2D {
 
         // shoot
         new GameMouseInputHandler(
-                () -> System.out.println("Shooting bullet..."),
+                () -> this.parentScene.addGameObject(new PlayerBulletObject2D(new Raylib.Vector2().x(this.position.x()+20.0f).y(this.position.y()))),
                 Raylib.MOUSE_BUTTON_LEFT,
                 "Shoots a bullet from the player.",
                 "Shoot",

@@ -9,7 +9,6 @@ import com.raylib.Colors;
 import com.raylib.Raylib;
 
 public class EnemyObject2D extends EntityObject2D {
-    public boolean attacking = false;
     public Raylib.Rectangle renderRect;
 
     private int moveTick = 0;

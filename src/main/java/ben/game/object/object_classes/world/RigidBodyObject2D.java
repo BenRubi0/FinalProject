@@ -39,6 +39,7 @@ public class RigidBodyObject2D extends GameObject2D {
 
     public void setRightVelocity(float velo) { this.velocity.x(velo); }
     public void setUpVelocity(float velo) { this.velocity.y(velo); }
+    public void setVelocity(Raylib.Vector2 velocity) { this.velocity.x(velocity.x()).y(velocity.y()); }
 
     public void addRightVelocity(float velo) {
         if (Math.abs(this.velocity.x()) < this.maxVelocity && Math.abs(this.velocity.x()) < this.maxSpeed)

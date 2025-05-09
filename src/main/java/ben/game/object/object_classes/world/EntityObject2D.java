@@ -22,6 +22,7 @@ public class EntityObject2D extends GameObject2D {
 
     public boolean isOnFloor = false;
     public boolean isEntityAlive = true;
+    public boolean usingGravity = true;
 
     private final ArrayList<Runnable> onDeathCallbacks = new ArrayList<>();
 
@@ -33,6 +34,17 @@ public class EntityObject2D extends GameObject2D {
         this.health = this.maxHealth;
         this.collider = new ColliderObject2D(dimensions, position);
         this.rigidBody = new RigidBodyObject2D(dimensions, position, 0.15f, 50.0f, 16.0f);
+    }
+
+    public EntityObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position, float maxHealth, boolean useGravity) {
+        super(dimensions, position);
+        this.setObjectGroup("Entities");
+        this.minHealth = 0.0f;
+        this.maxHealth = maxHealth;
+        this.health = this.maxHealth;
+        this.collider = new ColliderObject2D(dimensions, position);
+        this.rigidBody = new RigidBodyObject2D(dimensions, position, 0.15f, 50.0f, 16.0f);
+        this.usingGravity = useGravity;
     }
 
     public void heal(float amount) {
@@ -104,7 +116,7 @@ public class EntityObject2D extends GameObject2D {
             this.checkFloor();
 
             // gravity
-            if (!this.isOnFloor)
+            if (!this.isOnFloor && this.usingGravity)
                 this.rigidBody.addGravity();
 
             // update the entity's hitbox
