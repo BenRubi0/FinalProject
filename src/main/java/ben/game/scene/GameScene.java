@@ -44,6 +44,13 @@ public abstract class GameScene {
         }
     }
 
+    public void renderGui() {
+        for (GameObject object : this.getGameObjectsOfGroup("Gui")) {
+            if (object.shouldRender)
+                object.Render();
+        }
+    }
+
     public void close() {
         for (GameObject object : this.gameObjects) {
             if (object.shouldClose)

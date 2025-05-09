@@ -4,6 +4,7 @@
 
 package ben.game.scene.scenes;
 
+import ben.game.Game;
 import ben.game.object.object_classes.world.FloorObject2D;
 import ben.game.object.object_classes.world.PlayerObject2D;
 import ben.game.scene.GameScene;

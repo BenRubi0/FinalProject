@@ -23,6 +23,8 @@ public class GuiButtonObject2D extends GuiObject2D {
                 .width(this.dimensions.x()).height(this.dimensions.y());
     }
 
+    public void setButtonText(String buttonText) { this.buttonText = buttonText; }
+
     @Override
     public void Render() {
         this.isClicked = Raylib.GuiButton(this.renderRect, this.buttonText) == 1;
