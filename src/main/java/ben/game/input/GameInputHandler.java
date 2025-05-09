@@ -6,19 +6,16 @@ package ben.game.input;
 
 import ben.game.Game;
 import ben.game.object.GameObject;
-import com.raylib.Raylib;
 
 public class GameInputHandler {
     public GameObject parentObject;
 
-    public int triggerKey;
     public Runnable action;
     public String actionDescription;
     public String actionIdentifier;
     public boolean hold = false;
 
-    public GameInputHandler(Runnable eventHandler, int eventTriggerKey, String actionDescription, String actionIdentifier, GameObject parentObject) {
-        this.triggerKey = eventTriggerKey;
+    public GameInputHandler(Runnable eventHandler, String actionDescription, String actionIdentifier, GameObject parentObject) {
         this.action = eventHandler;
         this.actionDescription = actionDescription;
         this.actionIdentifier = actionIdentifier;
@@ -26,8 +23,7 @@ public class GameInputHandler {
         Game.addInputHandlerToGlobalArray(this);
     }
 
-    public GameInputHandler(Runnable eventHandler, int eventTriggerKey, String actionDescription, String actionIdentifier, GameObject parentObject, boolean hold) {
-        this.triggerKey = eventTriggerKey;
+    public GameInputHandler(Runnable eventHandler, String actionDescription, String actionIdentifier, GameObject parentObject, boolean hold) {
         this.action = eventHandler;
         this.actionDescription = actionDescription;
         this.actionIdentifier = actionIdentifier;
@@ -36,13 +32,5 @@ public class GameInputHandler {
         Game.addInputHandlerToGlobalArray(this);
     }
 
-    public void getInput() {
-        if (hold) {
-            if (Raylib.IsKeyDown(this.triggerKey))
-                this.action.run();
-        } else {
-            if (Raylib.IsKeyPressed(this.triggerKey))
-                this.action.run();
-        }
-    }
+    public void getInput() {}
 }

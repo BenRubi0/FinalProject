@@ -5,6 +5,7 @@
 package ben.game;
 
 import ben.game.input.GameInputHandler;
+import ben.game.input.GameKeyInputHandler;
 import ben.game.window.GameWindowContext;
 import ben.game.window.GameWindowDimensions;
 
