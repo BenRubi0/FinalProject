@@ -85,6 +85,8 @@ public class PlayerObject2D extends EntityObject2D {
         for (GameObject enemy : enemies) {
             if (enemy instanceof EnemyObject2D enemyObject2D) {
                 if (enemyObject2D.collider.checkHitboxCollision(this.collider)) {
+                    this.takeDamage(5.0f);
+
                     this.rigidBody.addUpVelocity(-2.0f);
                     enemyObject2D.jump();
 

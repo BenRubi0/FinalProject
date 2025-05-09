@@ -93,32 +93,34 @@ public class EntityObject2D extends GameObject2D {
 
     @Override
     public void Update() {
-        // velocity
-        this.rigidBody.Update();
+        if (this.isEntityAlive) {
+            // velocity
+            this.rigidBody.Update();
 
-        // floor
-        this.checkFloor();
+            // floor
+            this.checkFloor();
 
-        // gravity
-        if (!this.isOnFloor)
-            this.rigidBody.addGravity();
+            // gravity
+            if (!this.isOnFloor)
+                this.rigidBody.addGravity();
 
-        // update the entity's hitbox
-        this.collider.Update();
+            // update the entity's hitbox
+            this.collider.Update();
 
-        // check entity alive status
-        this.isEntityAlive = !(this.health <= minHealth);
+            // check entity alive status
+            this.isEntityAlive = !(this.health <= minHealth);
 
-        // check screen bounds
-        if (this.position.x() > (Game.windowContext.windowDimensions.width-(this.dimensions.x()/2)))
-            this.position.x(-(this.dimensions.x()/2));
-        else if (this.position.x() < -(this.dimensions.x()/2))
-            this.position.x(Game.getWindowDimensions().width - (this.dimensions.x()/2));
+            // check screen bounds
+            if (this.position.x() > (Game.windowContext.windowDimensions.width-(this.dimensions.x()/2)))
+                this.position.x(-(this.dimensions.x()/2));
+            else if (this.position.x() < -(this.dimensions.x()/2))
+                this.position.x(Game.getWindowDimensions().width - (this.dimensions.x()/2));
 
-        if (this.position.y() > (Game.windowContext.windowDimensions.height))
-            this.position.y(-(this.dimensions.y()/2));
-        else if (this.position.y() < -(this.dimensions.y()/2))
-            this.position.y(Game.getWindowDimensions().height - (this.dimensions.y()/2));
+            if (this.position.y() > (Game.windowContext.windowDimensions.height))
+                this.position.y(-(this.dimensions.y()/2));
+            else if (this.position.y() < -(this.dimensions.y()/2))
+                this.position.y(Game.getWindowDimensions().height - (this.dimensions.y()/2));
+        }
     }
 
     @Override

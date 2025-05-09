@@ -4,8 +4,9 @@
 
 package ben.game.object.object_classes.screen;
 
-import com.raylib.Colors;
 import com.raylib.Raylib;
+
+import java.util.ArrayList;
 
 public class GuiTextLabelObject2D extends GuiObject2D {
     public String text;
@@ -27,5 +28,10 @@ public class GuiTextLabelObject2D extends GuiObject2D {
     public void Render() {
         Raylib.DrawText(this.text, Math.round(this.position.x()), Math.round(this.position.y()), this.fontSize, this.textColor);
         super.Render();
+    }
+
+    @Override
+    public void Update() {
+        super.Update();
     }
 }
