@@ -6,8 +6,11 @@ package ben.game.object.object_classes.world;
 
 import ben.game.input.GameKeyInputHandler;
 import ben.game.input.GameMouseInputHandler;
+import ben.game.object.GameObject;
 import com.raylib.Colors;
 import com.raylib.Raylib;
+
+import java.util.ArrayList;
 
 public class PlayerObject2D extends EntityObject2D {
     private final Raylib.Rectangle renderRect;
@@ -50,8 +53,7 @@ public class PlayerObject2D extends EntityObject2D {
                 Raylib.KEY_SPACE,
                 "Makes the player jump up.",
                 "Jump",
-                this,
-                false
+                this
         );
 
         // crouch
@@ -77,11 +79,33 @@ public class PlayerObject2D extends EntityObject2D {
         );
     }
 
+    public void checkEnemyCollision() {
+        ArrayList<GameObject> enemies = this.parentScene.getGameObjectsOfGroup("Enemy");
+
+        for (GameObject enemy : enemies) {
+            if (enemy instanceof EnemyObject2D enemyObject2D) {
+                if (enemyObject2D.collider.checkHitboxCollision(this.collider)) {
+                    this.rigidBody.addUpVelocity(-2.0f);
+                    enemyObject2D.jump();
+
+                    if (this.position.x() < enemyObject2D.position.x()) {
+                        this.rigidBody.setRightVelocity(-2.5f);
+                        enemyObject2D.moveRight();
+                    } else if (this.position.x() > enemyObject2D.position.x()) {
+                        this.rigidBody.setRightVelocity(2.5f);
+                        enemyObject2D.moveLeft();
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void Update() {
         super.Update();
         this.renderRect.x(this.position.x()).y(this.position.y())
                 .width(this.dimensions.x()).height(this.dimensions.y());
+        this.checkEnemyCollision();
     }
 
     @Override
