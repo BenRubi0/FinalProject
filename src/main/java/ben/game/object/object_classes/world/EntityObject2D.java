@@ -12,9 +12,6 @@ import com.raylib.Raylib;
 
 import java.util.ArrayList;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class EntityObject2D extends GameObject2D {
     public ColliderObject2D collider;
     public RigidBodyObject2D rigidBody;
@@ -25,6 +22,8 @@ public class EntityObject2D extends GameObject2D {
 
     public boolean isOnFloor = false;
     public boolean isEntityAlive = true;
+
+    private final ArrayList<Runnable> onDeathCallbacks = new ArrayList<>();
 
     public EntityObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position, float maxHealth) {
         super(dimensions, position);
@@ -85,6 +84,10 @@ public class EntityObject2D extends GameObject2D {
             this.position.y(floorLevel-(this.collider.dimensions.y()+0.05f));
     }
 
+    public void addOnDeathCallback(Runnable callback) {
+        onDeathCallbacks.add(callback);
+    }
+
     public void renderHitbox() {
         if (Game.showHitboxes) {
             Raylib.DrawRectangleLinesEx(this.collider.hitbox, 3.5f, Colors.BLUE);
@@ -120,6 +123,12 @@ public class EntityObject2D extends GameObject2D {
                 this.position.y(-(this.dimensions.y()/2));
             else if (this.position.y() < -(this.dimensions.y()/2))
                 this.position.y(Game.getWindowDimensions().height - (this.dimensions.y()/2));
+        } else {
+            this.parentScene.removeGameObject(this);
+
+            for (Runnable callback : this.onDeathCallbacks) {
+                callback.run();
+            }
         }
     }
 

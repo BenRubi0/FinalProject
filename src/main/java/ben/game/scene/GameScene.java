@@ -12,13 +12,15 @@ import java.util.ArrayList;
 
 public abstract class GameScene {
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public ArrayList<GameObject> gameObjectRemovalList = new ArrayList<>();
+    public ArrayList<GameObject> gameObjectAddList = new ArrayList<>();
 
     public Raylib.Color bgColor = new Raylib.Color().r((byte) 0).b((byte) 0).g((byte) 0).a((byte) 255);
 
     public PlayerObject2D playerObject;
 
-    public void addGameObject(GameObject object) { this.gameObjects.add(object); object.setParentScene(this); }
-    public void removeGameObject(GameObject object) { this.gameObjects.remove(object); object.setParentScene(null); }
+    public void addGameObject(GameObject object) { this.gameObjectAddList.add(object); }
+    public void removeGameObject(GameObject object) { this.gameObjectRemovalList.add(object); }
 
     public void setBgColor(Raylib.Color color) { this.bgColor = color; }
 
@@ -39,6 +41,20 @@ public abstract class GameScene {
     }
 
     public void update() {
+        for (GameObject object : this.gameObjectRemovalList) {
+            this.gameObjects.remove(object);
+            object.setParentScene(null);
+        }
+
+        this.gameObjectRemovalList.clear();
+
+        for (GameObject object : this.gameObjectAddList) {
+            this.gameObjects.add(object);
+            object.setParentScene(this);
+        }
+
+        this.gameObjectAddList.clear();
+
         for (GameObject object : this.gameObjects) {
             if (object.shouldUpdate)
                 object.Update();

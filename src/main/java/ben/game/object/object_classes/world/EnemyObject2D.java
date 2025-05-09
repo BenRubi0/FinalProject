@@ -51,13 +51,15 @@ public class EnemyObject2D extends EntityObject2D {
     @Override
     public void Update() {
         super.Update();
-        this.renderRect.x(this.position.x()).y(this.position.y())
-                .width(this.dimensions.x()).height(this.dimensions.y());
-        this.checkForPlayer();
-        if (this.moveTick < 60) {
-            this.moveTick++;
-        } else if (this.moveTick == 60) {
-            this.moveTick = 0;
+        if (this.isEntityAlive) {
+            this.renderRect.x(this.position.x()).y(this.position.y())
+                    .width(this.dimensions.x()).height(this.dimensions.y());
+            this.checkForPlayer();
+            if (this.moveTick < 60) {
+                this.moveTick++;
+            } else if (this.moveTick == 60) {
+                this.moveTick = 0;
+            }
         }
     }
 }
