@@ -4,6 +4,7 @@
 
 package ben.game.object.object_classes.world;
 
+import ben.game.global.GameGlobalPlayerStats;
 import com.raylib.Colors;
 import com.raylib.Raylib;
 
@@ -18,6 +19,7 @@ public class EnemyObject2D extends EntityObject2D {
         this.setObjectGroup("Enemy");
         this.renderRect = new Raylib.Rectangle().x(this.position.x()).y(this.position.y())
                 .width(this.dimensions.x()).height(this.dimensions.y());
+        this.addOnDeathCallback(() -> GameGlobalPlayerStats.points += 5);
     }
 
     public void jump() {
