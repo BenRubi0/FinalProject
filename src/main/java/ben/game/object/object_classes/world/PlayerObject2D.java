@@ -45,7 +45,7 @@ public class PlayerObject2D extends EntityObject2D {
         new GameKeyInputHandler(
                 () -> {
                     if (this.isOnFloor)
-                        this.rigidBody.addUpVelocity(-10.0f);
+                        this.rigidBody.addUpVelocity(-7.5f);
                 },
                 Raylib.KEY_SPACE,
                 "Makes the player jump up.",

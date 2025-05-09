@@ -11,6 +11,8 @@ public class RigidBodyObject2D extends GameObject2D {
     public boolean canMove = true;
     public Raylib.Vector2 velocity = new Raylib.Vector2().x(0.0f).y(0.0f);
     public float velocityDamping = 0.1f;
+    public float maxVelocity;
+    public float maxSpeed;
 
     public boolean shouldMoveDown = true;
     public boolean shouldMoveUp = true;
@@ -21,9 +23,11 @@ public class RigidBodyObject2D extends GameObject2D {
         super(dimensions, position);
     }
 
-    public RigidBodyObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position, float velocityDamping) {
+    public RigidBodyObject2D(Raylib.Vector2 dimensions, Raylib.Vector2 position, float velocityDamping, float maxVelocity, float maxSpeed) {
         super(dimensions, position);
         this.velocityDamping = velocityDamping;
+        this.maxVelocity = maxVelocity;
+        this.maxSpeed = maxSpeed;
     }
 
     public void setCanMove(boolean canMove) { this.canMove = canMove; }
@@ -35,8 +39,16 @@ public class RigidBodyObject2D extends GameObject2D {
 
     public void setRightVelocity(float velo) { this.velocity.x(velo); }
     public void setUpVelocity(float velo) { this.velocity.y(velo); }
-    public void addRightVelocity(float velo) { this.velocity.x(this.velocity.x() + velo); }
-    public void addUpVelocity(float velo) { this.velocity.y(this.velocity.y() + velo); }
+
+    public void addRightVelocity(float velo) {
+        if (Math.abs(this.velocity.x()) < this.maxVelocity && Math.abs(this.velocity.x()) < this.maxSpeed)
+            this.velocity.x(this.velocity.x() + velo);
+    }
+
+    public void addUpVelocity(float velo) {
+        if (Math.abs(this.velocity.y()) < this.maxVelocity)
+            this.velocity.y(this.velocity.y() + velo);
+    }
 
     public void addGravity() { this.velocity.y(this.velocity.y() + (9.8f * (velocityDamping/2))); }
 

@@ -33,7 +33,7 @@ public class EntityObject2D extends GameObject2D {
         this.maxHealth = maxHealth;
         this.health = this.maxHealth;
         this.collider = new ColliderObject2D(dimensions, position);
-        this.rigidBody = new RigidBodyObject2D(dimensions, position, 0.15f);
+        this.rigidBody = new RigidBodyObject2D(dimensions, position, 0.15f, 50.0f, 16.0f);
     }
 
     public void heal(float amount) {
@@ -108,6 +108,17 @@ public class EntityObject2D extends GameObject2D {
 
         // check entity alive status
         this.isEntityAlive = !(this.health <= minHealth);
+
+        // check screen bounds
+        if (this.position.x() > (Game.windowContext.windowDimensions.width-(this.dimensions.x()/2)))
+            this.position.x(-(this.dimensions.x()/2));
+        else if (this.position.x() < -(this.dimensions.x()/2))
+            this.position.x(Game.getWindowDimensions().width - (this.dimensions.x()/2));
+
+        if (this.position.y() > (Game.windowContext.windowDimensions.height))
+            this.position.y(-(this.dimensions.y()/2));
+        else if (this.position.y() < -(this.dimensions.y()/2))
+            this.position.y(Game.getWindowDimensions().height - (this.dimensions.y()/2));
     }
 
     @Override
